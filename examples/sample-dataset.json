@@ -107,31 +107,114 @@
 
   "distribution": [
     {
-      "@type": "cr:FileObject",
-      "name": "marine-debris-images.zip",
-      "description": "Satellite images with marine debris annotations",
-      "contentUrl": "https://example.com/marine-debris.zip",
-      "encodingFormat": "application/zip"
+      "@type": "cr:FileSet",
+      "@id": "image_source_jpg_set",
+      "name": "image_source_jpg_set",
+      "description": "Image files",
+      "encodingFormat": "image/jpeg",
+      "includes": "NASAMarineDebris/source/201*.jpg"
+    },
+    {
+      "@type": "cr:FileSet",
+      "@id": "image_source_tif_set",
+      "name": "image_source_tif_set",
+      "description": "Image files",
+      "encodingFormat": "image/tiff",
+      "includes": "NASAMarineDebris/source/201*.tif"
+    },
+    {
+      "@type": "cr:FileSet",
+      "@id": "mask_labels_geojson_set",
+      "name": "mask_labels_geojson_set",
+      "description": "Mask files",
+      "encodingFormat": "application/json",
+      "includes": "NASAMarineDebris/labels/201*.geojson"
+    },
+    {
+      "@type": "cr:FileSet",
+      "@id": "mask_labels_npy_set",
+      "name": "mask_labels_npy_set",
+      "description": "Mask files",
+      "encodingFormat": "application/npy",
+      "includes": "NASAMarineDebris/labels/201*.npy"
     }
   ],
-
   "recordSet": [
     {
       "@type": "cr:RecordSet",
-      "name": "marine_debris_data",
-      "description": "Marine debris detection dataset",
+      "@id": "images",
+      "name": "Images",
+      "description": "Collection of image data",
+      "key": {
+        "@id": "image_source_jpg_id"
+      },
       "field": [
         {
           "@type": "cr:Field",
-          "name": "image",
-          "description": "RGB satellite image",
-          "dataType": "cr:Image"
+          "@id": "image_source_jpg_id",
+          "name": "image_source_jpg",
+          "dataType": "sc:ImageObject",
+          "source": {
+            "fileSet": {
+              "@id": "image_source_jpg_set"
+            },
+            "extract": {
+              "fileProperty": "content"
+            }
+          }
         },
         {
           "@type": "cr:Field",
-          "name": "annotations",
-          "description": "Bounding box annotations for marine debris",
-          "dataType": "cr:Text"
+          "@id": "image_source_tif_id",
+          "name": "image_source_tif",
+          "dataType": "sc:ImageObject",
+          "source": {
+            "fileSet": {
+              "@id": "image_source_tif_set"
+            },
+            "extract": {
+              "fileProperty": "content"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "@type": "cr:RecordSet",
+      "@id": "labels",
+      "name": "Labels/Annotations",
+      "description": "Collection of bounding box annotations for object detection",
+      "key": {
+        "@id": "mask_labels_geojson_id"
+      },
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "mask_labels_geojson_id",
+          "name": "mask_labels_geojson",
+          "dataType": "cr:BoundingBox",
+          "source": {
+            "fileSet": {
+              "@id": "mask_labels_geojson_set"
+            },
+            "extract": {
+              "fileProperty": "content"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "mask_labels_npy_id",
+          "name": "mask_labels_npy",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "mask_labels_npy_set"
+            },
+            "extract": {
+              "fileProperty": "content"
+            }
+          }
         }
       ]
     }
