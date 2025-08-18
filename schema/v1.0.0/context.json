@@ -7,55 +7,49 @@
       "@type": "xsd:string",
       "@id": "eo:scope"
     },
-    "eo:hasTask": {
-      "@type": "@id",
-      "@container": "@set",
-      "@id": "eo:hasTask"
-    },
-    "eo:spatialResolutionInMeters": {
-      "@type": "xsd:float",
-      "@id": "eo:spatialResolutionInMeters"
-    },
-    "eo:dataSource": {
-      "@type": "xsd:string",
-      "@container": "@set",
-      "@id": "eo:dataSource"
+    "eo:has-task": {
+      "@type": "@json",
+      "@id": "eo:has-task"
     },
     "eo:amountOfTrainingData": {
-      "@type": "xsd:integer",
+      "@type": "xsd:string",
       "@id": "eo:amountOfTrainingData"
     },
     "eo:numberOfClasses": {
-      "@type": "xsd:integer",
+      "@type": "xsd:string",
       "@id": "eo:numberOfClasses"
     },
-    "eo:status": {
-      "@type": "xsd:string",
-      "@id": "eo:status"
-    },
-    "eo:availability": {
-      "@type": "xsd:string",
-      "@id": "eo:availability"
-    },
-    "eo:imageSize": {
+    "eo:band": {
       "@type": "@json",
-      "@id": "eo:imageSize"
+      "@container": "@set",
+      "@id": "eo:band"
     },
-    "eo:bands": {
+    "eo:has_class": {
       "@type": "@json",
-      "@id": "eo:bands"
+      "@container": "@set",
+      "@id": "eo:has_class"
     },
-    "eo:representationTechnique": {
-      "@type": "xsd:string",
-      "@id": "eo:representationTechnique"
+    "eo:statisticsInfo": {
+      "@type": "@json",
+      "@container": "@set",
+      "@id": "eo:statisticsInfo"
+    },
+    "eo:metricsInLIT": {
+      "@type": "@json",
+      "@container": "@set",
+      "@id": "eo:metricsInLIT"
     },
     "eo:labeling": {
       "@type": "@json",
       "@id": "eo:labeling"
     },
-    "eo:metricsInLIT": {
-      "@type": "@json",
-      "@id": "eo:metricsInLIT"
+    "eo:spatialResolutionInMeters": {
+      "@type": "xsd:string",
+      "@id": "eo:spatialResolutionInMeters"
+    },
+    "eo:status": {
+      "@type": "xsd:string",
+      "@id": "eo:status"
     }
   }
 }

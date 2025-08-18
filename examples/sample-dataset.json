@@ -5,73 +5,133 @@
     "eo": "https://zigaklun.github.io/croissant-eo-extension/schema/v1.0.0/"
   },
   "@type": "sc:Dataset",
-  "name": "eurosat-rgb-classification",
-  "description": "EuroSAT RGB dataset for land use classification from Sentinel-2 imagery",
+  "name": "marine-debris-detection",
+  "description": "Dataset for marine debris detection from satellite imagery",
   "version": "1.0.0",
   "license": "MIT",
-  "url": "https://github.com/phelber/eurosat",
 
-  "eo:scope": "continental",
-  "eo:hasTask": ["classification"],
-  "eo:spatialResolutionInMeters": 10.0,
-  "eo:dataSource": ["Sentinel-2"],
-  "eo:amountOfTrainingData": 27000,
-  "eo:numberOfClasses": 10,
-  "eo:status": "complete",
-  "eo:availability": "public",
+  "eo:scope": "Images were acquired over coastal regions of Honduras, Greece and Ghana.",
+  "eo:has-task": {
+    "description": "Object detection with a bounding box around marine debris.",
+    "taskType": "object detection"
+  },
+  "eo:amountOfTrainingData": "739",
+  "eo:numberOfClasses": "2",
+  "eo:band": [
+    {
+      "label": "B1",
+      "value": "Red (600-700nm)"
+    },
+    {
+      "label": "B2",
+      "value": "Green (500-600nm)"
+    },
+    {
+      "label": "B3",
+      "value": "Blue (400-450nm)"
+    }
+  ],
+  "eo:has_class": [
+    {
+      "label": "marine debris",
+      "identifier": 1
+    },
+    {
+      "label": "empty",
+      "identifier": 2
+    }
+  ],
+  "eo:statisticsInfo": [
+    {
+      "label": "number of image patches",
+      "value": "739"
+    },
+    {
+      "label": "number of .jpg image patches",
+      "value": "739"
+    },
+    {
+      "label": "number of .tif image patches",
+      "value": "739"
+    },
+    {
+      "label": "number of marine debris",
+      "value": "739"
+    }
+  ],
+  "eo:metricsInLIT": [
+    {
+      "identifier": "https://github.com/NASA-IMPACT/marine_debris_ML",
+      "algorithm": "SSD Resnet 101 Feature Pyramid Network (FPN)",
+      "literature_metric": [
+        {
+          "label": "Average recall",
+          "value": "0.70"
+        },
+        {
+          "label": "F1",
+          "value": "0.74"
+        }
+      ]
+    }
+  ],
+  "eo:labeling": {
+    "identifier": "nasa-marine-debries-labeling",
+    "labeler": [
+      {
+        "identifier": "nasa-marine-debries-labeling_1",
+        "name": "Shaia, A."
+      },
+      {
+        "identifier": "nasa-marine-debries-labeling_2",
+        "name": "Thomas, L."
+      },
+      {
+        "identifier": "nasa-marine-debries-labeling_3",
+        "name": "Maskey, M."
+      }
+    ],
+    "procedure": {
+      "identifier": "nasa-marine-debries-labeling-procedure",
+      "scope": "Annotate each building instance with a bounding box and damage mask across video frames.",
+      "method": [
+        {
+          "label": "labels",
+          "definition": "Image Labeler used to manually digitize bounding box annotations for observable debris on Planetscope optical imagery."
+        }
+      ]
+    }
+  },
+  "eo:spatialResolutionInMeters": "10",
+  "eo:status": "completed",
 
   "distribution": [
     {
       "@type": "cr:FileObject",
-      "name": "eurosat-rgb.zip",
-      "description": "RGB images from EuroSAT dataset",
-      "contentUrl": "https://example.com/eurosat-rgb.zip",
-      "encodingFormat": "application/zip",
-      "contentSize": "89MB"
+      "name": "marine-debris-images.zip",
+      "description": "Satellite images with marine debris annotations",
+      "contentUrl": "https://example.com/marine-debris.zip",
+      "encodingFormat": "application/zip"
     }
   ],
 
   "recordSet": [
     {
       "@type": "cr:RecordSet",
-      "name": "eurosat_images",
-      "description": "Land use classification images",
+      "name": "marine_debris_data",
+      "description": "Marine debris detection dataset",
       "field": [
         {
           "@type": "cr:Field",
           "name": "image",
           "description": "RGB satellite image",
-          "dataType": "cr:Image",
-          "eo:imageSize": [64, 64, 3],
-          "eo:bands": {
-            "count": 3,
-            "names": ["Red", "Green", "Blue"],
-            "wavelengths": [665, 560, 490],
-            "units": "nanometers"
-          },
-          "eo:representationTechnique": "surface_reflectance"
+          "dataType": "cr:Image"
         },
         {
           "@type": "cr:Field",
-          "name": "label",
-          "description": "Land use class",
-          "dataType": "cr:Integer",
-          "eo:labeling": {
-            "method": "manual_annotation",
-            "confidence": "high",
-            "labelMap": {
-              "0": "AnnualCrop",
-              "1": "Forest",
-              "2": "HerbaceousVegetation",
-              "3": "Highway",
-              "4": "Industrial",
-              "5": "Pasture",
-              "6": "PermanentCrop",
-              "7": "Residential",
-              "8": "River",
-              "9": "SeaLake"
-            }
-          }
+          "name": "annotations",
+          "description": "Bounding box annotations for marine debris",
+          "dataType": "cr:Text"
         }
       ]
     }

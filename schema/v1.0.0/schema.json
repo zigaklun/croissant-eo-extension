@@ -8,175 +8,199 @@
   "definitions": {
     "scope": {
       "type": "string",
-      "enum": ["global", "continental", "national", "regional", "local"],
-      "description": "Geographic scope of the dataset coverage"
+      "description": "Geographic scope or description of dataset coverage"
     },
 
-    "task": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "enum": [
-          "classification",
-          "segmentation",
-          "object_detection",
-          "change_detection",
-          "regression",
-          "super_resolution",
-          "denoising"
-        ]
-      },
-      "description": "Machine learning tasks supported by this dataset"
-    },
-
-    "spatialResolution": {
-      "type": "number",
-      "minimum": 0.1,
-      "maximum": 10000,
-      "description": "Spatial resolution in meters (ground sampling distance)"
-    },
-
-    "dataSource": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "examples": [
-          "Sentinel-1",
-          "Sentinel-2",
-          "Sentinel-3",
-          "Landsat-8",
-          "Landsat-9",
-          "MODIS",
-          "VIIRS",
-          "PlanetScope",
-          "WorldView",
-          "SPOT",
-          "RapidEye"
-        ]
-      },
-      "description": "Source satellites or sensors"
-    },
-
-    "status": {
-      "type": "string",
-      "enum": ["complete", "ongoing", "deprecated", "beta"],
-      "description": "Current status of the dataset"
-    },
-
-    "availability": {
-      "type": "string",
-      "enum": ["public", "restricted", "private", "commercial"],
-      "description": "Access level and availability"
-    },
-
-    "imageSize": {
-      "type": "array",
-      "items": {
-        "type": "integer",
-        "minimum": 1
-      },
-      "minItems": 2,
-      "maxItems": 3,
-      "description": "Image dimensions [width, height] or [width, height, channels]"
-    },
-
-    "bands": {
+    "hasTask": {
       "type": "object",
       "properties": {
-        "count": {
-          "type": "integer",
-          "minimum": 1,
-          "description": "Number of spectral bands"
-        },
-        "names": {
-          "type": "array",
-          "items": { "type": "string" },
-          "description": "Band names or identifiers"
-        },
-        "wavelengths": {
-          "type": "array",
-          "items": { "type": "number" },
-          "description": "Central wavelengths in nanometers"
-        },
-        "units": {
+        "description": {
           "type": "string",
-          "default": "nanometers",
-          "description": "Units for wavelength measurements"
+          "description": "Description of the ML task"
+        },
+        "taskType": {
+          "type": "string",
+          "enum": [
+            "classification",
+            "segmentation",
+            "object detection",
+            "change detection",
+            "regression"
+          ],
+          "description": "Type of machine learning task"
         }
       },
-      "required": ["count"]
+      "required": ["taskType"]
+    },
+
+    "band": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string",
+            "description": "Band identifier (e.g., B1, B2, Red)"
+          },
+          "value": {
+            "type": "string",
+            "description": "Band description with wavelength range"
+          }
+        },
+        "required": ["label", "value"]
+      }
+    },
+
+    "hasClass": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string",
+            "description": "Class name"
+          },
+          "identifier": {
+            "type": "integer",
+            "description": "Class ID number"
+          }
+        },
+        "required": ["label", "identifier"]
+      }
+    },
+
+    "statisticsInfo": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string",
+            "description": "Statistic name"
+          },
+          "value": {
+            "type": "string",
+            "description": "Statistic value"
+          }
+        },
+        "required": ["label", "value"]
+      }
+    },
+
+    "metricsInLIT": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "identifier": {
+            "type": "string",
+            "description": "Reference identifier (URL, DOI, etc.)"
+          },
+          "algorithm": {
+            "type": "string",
+            "description": "Algorithm used"
+          },
+          "literature_metric": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "type": "string",
+                  "description": "Metric name"
+                },
+                "value": {
+                  "type": "string",
+                  "description": "Metric value"
+                }
+              },
+              "required": ["label", "value"]
+            }
+          }
+        }
+      }
     },
 
     "labeling": {
       "type": "object",
       "properties": {
-        "method": {
+        "identifier": {
           "type": "string",
-          "enum": [
-            "manual_annotation",
-            "automated",
-            "semi_automated",
-            "crowdsourced"
-          ],
-          "description": "Labeling methodology"
+          "description": "Labeling process identifier"
         },
-        "annotators": {
-          "type": "integer",
-          "minimum": 1,
-          "description": "Number of annotators"
+        "labeler": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "identifier": {
+                "type": "string",
+                "description": "Labeler identifier"
+              },
+              "name": {
+                "type": "string",
+                "description": "Labeler name"
+              }
+            },
+            "required": ["name"]
+          }
         },
-        "confidence": {
-          "type": "string",
-          "enum": ["low", "medium", "high"],
-          "description": "Overall confidence in labels"
-        },
-        "labelMap": {
+        "procedure": {
           "type": "object",
-          "patternProperties": {
-            "^[0-9]+$": { "type": "string" }
-          },
-          "description": "Mapping from class indices to class names"
+          "properties": {
+            "identifier": {
+              "type": "string"
+            },
+            "scope": {
+              "type": "string",
+              "description": "Description of labeling scope"
+            },
+            "method": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "definition": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
         }
       }
+    },
+
+    "status": {
+      "type": "string",
+      "enum": ["completed", "ongoing", "deprecated", "beta"],
+      "description": "Dataset completion status"
     }
   },
 
   "properties": {
     "eo:scope": { "$ref": "#/definitions/scope" },
-    "eo:hasTask": { "$ref": "#/definitions/task" },
-    "eo:spatialResolutionInMeters": {
-      "$ref": "#/definitions/spatialResolution"
-    },
-    "eo:dataSource": { "$ref": "#/definitions/dataSource" },
+    "eo:has-task": { "$ref": "#/definitions/hasTask" },
     "eo:amountOfTrainingData": {
-      "type": "integer",
-      "minimum": 1,
-      "description": "Number of training samples"
+      "type": "string",
+      "description": "Number of training samples (as string)"
     },
     "eo:numberOfClasses": {
-      "type": "integer",
-      "minimum": 2,
-      "description": "Number of classification classes"
-    },
-    "eo:status": { "$ref": "#/definitions/status" },
-    "eo:availability": { "$ref": "#/definitions/availability" },
-    "eo:imageSize": { "$ref": "#/definitions/imageSize" },
-    "eo:bands": { "$ref": "#/definitions/bands" },
-    "eo:representationTechnique": {
       "type": "string",
-      "enum": [
-        "raw_digital_numbers",
-        "top_of_atmosphere_radiance",
-        "top_of_atmosphere_reflectance",
-        "surface_reflectance",
-        "surface_temperature"
-      ],
-      "description": "Level of atmospheric correction applied"
+      "description": "Number of classification classes (as string)"
     },
+    "eo:band": { "$ref": "#/definitions/band" },
+    "eo:has_class": { "$ref": "#/definitions/hasClass" },
+    "eo:statisticsInfo": { "$ref": "#/definitions/statisticsInfo" },
+    "eo:metricsInLIT": { "$ref": "#/definitions/metricsInLIT" },
     "eo:labeling": { "$ref": "#/definitions/labeling" },
-    "eo:metricsInLIT": {
-      "type": "object",
-      "description": "Performance metrics reported in literature"
-    }
+    "eo:spatialResolutionInMeters": {
+      "type": "string",
+      "description": "Spatial resolution in meters (as string)"
+    },
+    "eo:status": { "$ref": "#/definitions/status" }
   }
 }

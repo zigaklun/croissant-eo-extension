@@ -99,19 +99,28 @@
             <div class="card">
                 <h3>📚 Documentation</h3>
                 <p>Complete field definitions and usage examples</p>
-                <a href="docs/">→ View Docs</a>
+                <a
+                    href="https://github.com/zigaklun/croissant-eo-extension/blob/main/README.md"
+                    >→ View Docs</a
+                >
             </div>
 
             <div class="card">
                 <h3>🔧 Schema Files</h3>
                 <p>JSON Schema and JSON-LD context definitions</p>
-                <a href="schema/v1.0.0/">→ View Schema</a>
+                <a
+                    href="https://github.com/zigaklun/croissant-eo-extension/tree/main/schema/v1.0.0"
+                    >→ View Schema</a
+                >
             </div>
 
             <div class="card">
                 <h3>💡 Examples</h3>
                 <p>Sample datasets using the EO extension</p>
-                <a href="examples/">→ View Examples</a>
+                <a
+                    href="https://github.com/zigaklun/croissant-eo-extension/tree/main/examples"
+                    >→ View Examples</a
+                >
             </div>
         </div>
 
@@ -119,33 +128,44 @@
             <h2>🚀 Available Fields</h2>
             <ul>
                 <li>
-                    <strong>eo:scope</strong> - Geographic coverage (global,
-                    regional, local)
-                </li>
-                <li><strong>eo:hasTask</strong> - Supported ML tasks</li>
-                <li>
-                    <strong>eo:spatialResolutionInMeters</strong> - Ground
-                    sampling distance
+                    <strong>eo:scope</strong> - Geographic coverage description
                 </li>
                 <li>
-                    <strong>eo:dataSource</strong> - Source satellites/sensors
+                    <strong>eo:has-task</strong> - ML task description and type
                 </li>
                 <li>
                     <strong>eo:amountOfTrainingData</strong> - Number of
                     training samples
                 </li>
                 <li>
-                    <strong>eo:numberOfClasses</strong> - Classification classes
-                    count
+                    <strong>eo:numberOfClasses</strong> - Number of
+                    classification classes
                 </li>
                 <li>
-                    <strong>eo:status</strong> - Dataset status (complete,
-                    ongoing, deprecated)
+                    <strong>eo:band</strong> - Spectral band information with
+                    labels and wavelengths
                 </li>
                 <li>
-                    <strong>eo:availability</strong> - Access level (public,
-                    restricted, private)
+                    <strong>eo:has_class</strong> - Class definitions with
+                    labels and identifiers
                 </li>
+                <li>
+                    <strong>eo:statisticsInfo</strong> - Dataset statistics and
+                    counts
+                </li>
+                <li>
+                    <strong>eo:metricsInLIT</strong> - Performance metrics from
+                    literature
+                </li>
+                <li>
+                    <strong>eo:labeling</strong> - Labeling methodology and
+                    annotator information
+                </li>
+                <li>
+                    <strong>eo:spatialResolutionInMeters</strong> - Spatial
+                    resolution
+                </li>
+                <li><strong>eo:status</strong> - Dataset completion status</li>
             </ul>
         </div>
 
