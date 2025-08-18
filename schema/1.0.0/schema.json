@@ -1,0 +1,182 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zigaklun.github.io/croissant-eo-extension/schema/v1.0.0/schema.json",
+  "title": "Earth Observation Croissant Extension",
+  "description": "Schema extension for Earth Observation datasets in MLCommons Croissant format",
+  "version": "1.0.0",
+
+  "definitions": {
+    "scope": {
+      "type": "string",
+      "enum": ["global", "continental", "national", "regional", "local"],
+      "description": "Geographic scope of the dataset coverage"
+    },
+
+    "task": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "classification",
+          "segmentation",
+          "object_detection",
+          "change_detection",
+          "regression",
+          "super_resolution",
+          "denoising"
+        ]
+      },
+      "description": "Machine learning tasks supported by this dataset"
+    },
+
+    "spatialResolution": {
+      "type": "number",
+      "minimum": 0.1,
+      "maximum": 10000,
+      "description": "Spatial resolution in meters (ground sampling distance)"
+    },
+
+    "dataSource": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "examples": [
+          "Sentinel-1",
+          "Sentinel-2",
+          "Sentinel-3",
+          "Landsat-8",
+          "Landsat-9",
+          "MODIS",
+          "VIIRS",
+          "PlanetScope",
+          "WorldView",
+          "SPOT",
+          "RapidEye"
+        ]
+      },
+      "description": "Source satellites or sensors"
+    },
+
+    "status": {
+      "type": "string",
+      "enum": ["complete", "ongoing", "deprecated", "beta"],
+      "description": "Current status of the dataset"
+    },
+
+    "availability": {
+      "type": "string",
+      "enum": ["public", "restricted", "private", "commercial"],
+      "description": "Access level and availability"
+    },
+
+    "imageSize": {
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "minimum": 1
+      },
+      "minItems": 2,
+      "maxItems": 3,
+      "description": "Image dimensions [width, height] or [width, height, channels]"
+    },
+
+    "bands": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Number of spectral bands"
+        },
+        "names": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Band names or identifiers"
+        },
+        "wavelengths": {
+          "type": "array",
+          "items": { "type": "number" },
+          "description": "Central wavelengths in nanometers"
+        },
+        "units": {
+          "type": "string",
+          "default": "nanometers",
+          "description": "Units for wavelength measurements"
+        }
+      },
+      "required": ["count"]
+    },
+
+    "labeling": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": [
+            "manual_annotation",
+            "automated",
+            "semi_automated",
+            "crowdsourced"
+          ],
+          "description": "Labeling methodology"
+        },
+        "annotators": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Number of annotators"
+        },
+        "confidence": {
+          "type": "string",
+          "enum": ["low", "medium", "high"],
+          "description": "Overall confidence in labels"
+        },
+        "labelMap": {
+          "type": "object",
+          "patternProperties": {
+            "^[0-9]+$": { "type": "string" }
+          },
+          "description": "Mapping from class indices to class names"
+        }
+      }
+    }
+  },
+
+  "properties": {
+    "eo:scope": { "$ref": "#/definitions/scope" },
+    "eo:hasTask": { "$ref": "#/definitions/task" },
+    "eo:spatialResolutionInMeters": {
+      "$ref": "#/definitions/spatialResolution"
+    },
+    "eo:dataSource": { "$ref": "#/definitions/dataSource" },
+    "eo:amountOfTrainingData": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Number of training samples"
+    },
+    "eo:numberOfClasses": {
+      "type": "integer",
+      "minimum": 2,
+      "description": "Number of classification classes"
+    },
+    "eo:status": { "$ref": "#/definitions/status" },
+    "eo:availability": { "$ref": "#/definitions/availability" },
+    "eo:imageSize": { "$ref": "#/definitions/imageSize" },
+    "eo:bands": { "$ref": "#/definitions/bands" },
+    "eo:representationTechnique": {
+      "type": "string",
+      "enum": [
+        "raw_digital_numbers",
+        "top_of_atmosphere_radiance",
+        "top_of_atmosphere_reflectance",
+        "surface_reflectance",
+        "surface_temperature"
+      ],
+      "description": "Level of atmospheric correction applied"
+    },
+    "eo:labeling": { "$ref": "#/definitions/labeling" },
+    "eo:metricsInLIT": {
+      "type": "object",
+      "description": "Performance metrics reported in literature"
+    }
+  }
+}

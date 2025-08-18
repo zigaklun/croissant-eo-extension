@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Earth Observation Croissant Extension</title>
+        <style>
+            body {
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                    sans-serif;
+                line-height: 1.6;
+                max-width: 1000px;
+                margin: 0 auto;
+                padding: 20px;
+                color: #333;
+            }
+            .header {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 40px;
+                border-radius: 10px;
+                text-align: center;
+                margin-bottom: 40px;
+            }
+            .card {
+                background: #f8f9fa;
+                padding: 30px;
+                margin: 20px 0;
+                border-radius: 8px;
+                border-left: 4px solid #667eea;
+            }
+            .code {
+                background: #2d3748;
+                color: #e2e8f0;
+                padding: 20px;
+                border-radius: 6px;
+                overflow-x: auto;
+                font-family: "Monaco", "Consolas", monospace;
+                font-size: 14px;
+            }
+            .badge {
+                background: #48bb78;
+                color: white;
+                padding: 4px 12px;
+                border-radius: 20px;
+                font-size: 12px;
+                font-weight: bold;
+            }
+            a {
+                color: #667eea;
+                text-decoration: none;
+            }
+            a:hover {
+                text-decoration: underline;
+            }
+            .grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 20px;
+                margin: 30px 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <h1>🛰️ Earth Observation Croissant Extension</h1>
+            <p>Extending MLCommons Croissant for Earth Observation datasets</p>
+            <span class="badge">v1.0.0</span>
+        </div>
+
+        <div class="card">
+            <h2>🎯 Purpose</h2>
+            <p>
+                This extension adds Earth Observation-specific metadata fields
+                to the
+                <a href="https://mlcommons.org/croissant/" target="_blank"
+                    >MLCommons Croissant</a
+                >
+                standard, enabling better description and discovery of satellite
+                imagery datasets for machine learning.
+            </p>
+        </div>
+
+        <div class="card">
+            <h2>📋 Quick Start</h2>
+            <p>Add the EO namespace to your Croissant metadata:</p>
+            <div class="code">
+                { "@context": { "cr": "https://mlcommons.org/croissant/", "eo":
+                "https://zigaklun.github.io/croissant-eo-extension/schema/v1.0.0/"
+                }, "@type": "sc:Dataset", "name": "my-eo-dataset", "eo:scope":
+                "global", "eo:hasTask": ["classification", "segmentation"],
+                "eo:spatialResolutionInMeters": 10.0, "eo:dataSource":
+                ["Sentinel-2"] }
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <h3>📚 Documentation</h3>
+                <p>Complete field definitions and usage examples</p>
+                <a href="docs/">→ View Docs</a>
+            </div>
+
+            <div class="card">
+                <h3>🔧 Schema Files</h3>
+                <p>JSON Schema and JSON-LD context definitions</p>
+                <a href="schema/v1.0.0/">→ View Schema</a>
+            </div>
+
+            <div class="card">
+                <h3>💡 Examples</h3>
+                <p>Sample datasets using the EO extension</p>
+                <a href="examples/">→ View Examples</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>🚀 Available Fields</h2>
+            <ul>
+                <li>
+                    <strong>eo:scope</strong> - Geographic coverage (global,
+                    regional, local)
+                </li>
+                <li><strong>eo:hasTask</strong> - Supported ML tasks</li>
+                <li>
+                    <strong>eo:spatialResolutionInMeters</strong> - Ground
+                    sampling distance
+                </li>
+                <li>
+                    <strong>eo:dataSource</strong> - Source satellites/sensors
+                </li>
+                <li>
+                    <strong>eo:amountOfTrainingData</strong> - Number of
+                    training samples
+                </li>
+                <li>
+                    <strong>eo:numberOfClasses</strong> - Classification classes
+                    count
+                </li>
+                <li>
+                    <strong>eo:status</strong> - Dataset status (complete,
+                    ongoing, deprecated)
+                </li>
+                <li>
+                    <strong>eo:availability</strong> - Access level (public,
+                    restricted, private)
+                </li>
+            </ul>
+        </div>
+
+        <footer
+            style="
+                text-align: center;
+                margin-top: 50px;
+                padding-top: 20px;
+                border-top: 1px solid #e2e8f0;
+            "
+        >
+            <p>
+                Created for the Earth Observation ML community •
+                <a href="https://github.com/zigaklun/croissant-eo-extension"
+                    >GitHub Repository</a
+                >
+            </p>
+        </footer>
+    </body>
+</html>

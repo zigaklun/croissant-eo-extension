@@ -1,0 +1,79 @@
+{
+  "@context": {
+    "cr": "https://mlcommons.org/croissant/",
+    "sc": "https://schema.org/",
+    "eo": "https://zigaklun.github.io/croissant-eo-extension/schema/v1.0.0/"
+  },
+  "@type": "sc:Dataset",
+  "name": "eurosat-rgb-classification",
+  "description": "EuroSAT RGB dataset for land use classification from Sentinel-2 imagery",
+  "version": "1.0.0",
+  "license": "MIT",
+  "url": "https://github.com/phelber/eurosat",
+
+  "eo:scope": "continental",
+  "eo:hasTask": ["classification"],
+  "eo:spatialResolutionInMeters": 10.0,
+  "eo:dataSource": ["Sentinel-2"],
+  "eo:amountOfTrainingData": 27000,
+  "eo:numberOfClasses": 10,
+  "eo:status": "complete",
+  "eo:availability": "public",
+
+  "distribution": [
+    {
+      "@type": "cr:FileObject",
+      "name": "eurosat-rgb.zip",
+      "description": "RGB images from EuroSAT dataset",
+      "contentUrl": "https://example.com/eurosat-rgb.zip",
+      "encodingFormat": "application/zip",
+      "contentSize": "89MB"
+    }
+  ],
+
+  "recordSet": [
+    {
+      "@type": "cr:RecordSet",
+      "name": "eurosat_images",
+      "description": "Land use classification images",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "name": "image",
+          "description": "RGB satellite image",
+          "dataType": "cr:Image",
+          "eo:imageSize": [64, 64, 3],
+          "eo:bands": {
+            "count": 3,
+            "names": ["Red", "Green", "Blue"],
+            "wavelengths": [665, 560, 490],
+            "units": "nanometers"
+          },
+          "eo:representationTechnique": "surface_reflectance"
+        },
+        {
+          "@type": "cr:Field",
+          "name": "label",
+          "description": "Land use class",
+          "dataType": "cr:Integer",
+          "eo:labeling": {
+            "method": "manual_annotation",
+            "confidence": "high",
+            "labelMap": {
+              "0": "AnnualCrop",
+              "1": "Forest",
+              "2": "HerbaceousVegetation",
+              "3": "Highway",
+              "4": "Industrial",
+              "5": "Pasture",
+              "6": "PermanentCrop",
+              "7": "Residential",
+              "8": "River",
+              "9": "SeaLake"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

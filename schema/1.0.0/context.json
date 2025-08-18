@@ -1,0 +1,61 @@
+{
+  "@context": {
+    "eo": "https://zigaklun.github.io/croissant-eo-extension/schema/v1.0.0/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "eo:scope": {
+      "@type": "xsd:string",
+      "@id": "eo:scope"
+    },
+    "eo:hasTask": {
+      "@type": "@id",
+      "@container": "@set",
+      "@id": "eo:hasTask"
+    },
+    "eo:spatialResolutionInMeters": {
+      "@type": "xsd:float",
+      "@id": "eo:spatialResolutionInMeters"
+    },
+    "eo:dataSource": {
+      "@type": "xsd:string",
+      "@container": "@set",
+      "@id": "eo:dataSource"
+    },
+    "eo:amountOfTrainingData": {
+      "@type": "xsd:integer",
+      "@id": "eo:amountOfTrainingData"
+    },
+    "eo:numberOfClasses": {
+      "@type": "xsd:integer",
+      "@id": "eo:numberOfClasses"
+    },
+    "eo:status": {
+      "@type": "xsd:string",
+      "@id": "eo:status"
+    },
+    "eo:availability": {
+      "@type": "xsd:string",
+      "@id": "eo:availability"
+    },
+    "eo:imageSize": {
+      "@type": "@json",
+      "@id": "eo:imageSize"
+    },
+    "eo:bands": {
+      "@type": "@json",
+      "@id": "eo:bands"
+    },
+    "eo:representationTechnique": {
+      "@type": "xsd:string",
+      "@id": "eo:representationTechnique"
+    },
+    "eo:labeling": {
+      "@type": "@json",
+      "@id": "eo:labeling"
+    },
+    "eo:metricsInLIT": {
+      "@type": "@json",
+      "@id": "eo:metricsInLIT"
+    }
+  }
+}
