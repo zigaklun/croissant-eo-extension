@@ -38,6 +38,7 @@
                 overflow-x: auto;
                 font-family: "Monaco", "Consolas", monospace;
                 font-size: 14px;
+                white-space: pre;
             }
             .badge {
                 background: #48bb78;
@@ -85,26 +86,31 @@
         <div class="card">
             <h2>📋 Quick Start</h2>
             <p>Add the EO namespace to your Croissant metadata:</p>
-            <div class="code">
-                { "@context": { "cr": "https://mlcommons.org/croissant/", "eo":
-                "https://zigaklun.github.io/croissant-eo-extension/schema/v1.0.0/"
-                }, "@type": "sc:Dataset", "name": "my-eo-dataset", "eo:scope":
-                "global", "eo:hasTask": ["classification", "segmentation"],
-                "eo:spatialResolutionInMeters": 10.0, "eo:dataSource":
-                ["Sentinel-2"] }
+            <pre class="code">
+                {
+                "@context":
+                {
+                    "cr": "https://mlcommons.org/croissant/",
+                    "eo": "https://zigaklun.github.io/croissant-eo-extension/schema/v1.0.0/"
+                },
+                "@type": "sc:Dataset",
+                "name": "my-eo-dataset",
+                "eo:scope":"global",
+                "eo:hasTask": ["classification", "segmentation"],
+                "eo:spatialResolutionInMeters": 10.0,
+                "eo:dataSource":["Sentinel-2"]
+                }
+            </pre>
+            <div>
+                <p>Complete field definitions and usage examples</p>
+                <a
+                    href="https://github.com/zigaklun/croissant-eo-extension/blob/main/docs/README.md"
+                    >→ Documetation</a
+                >
             </div>
         </div>
 
         <div class="grid">
-            <div class="card">
-                <h3>📚 Documentation</h3>
-                <p>Complete field definitions and usage examples</p>
-                <a
-                    href="https://github.com/zigaklun/croissant-eo-extension/blob/main/README.md"
-                    >→ View Docs</a
-                >
-            </div>
-
             <div class="card">
                 <h3>🔧 Context files</h3>
                 <p>JSON-LD context definitions</p>
@@ -127,8 +133,8 @@
                 <h3>💡 Examples</h3>
                 <p>Sample datasets using the EO extension</p>
                 <a
-                    href="https://github.com/zigaklun/croissant-eo-extension/tree/main/examples"
-                    >→ View Examples</a
+                    href="https://zigaklun.github.io/croissant-eo-extension/examples/NASA-Marine-debris-dataset.json"
+                    >→ View NASA Marine debris dataset example</a
                 >
             </div>
         </div>
