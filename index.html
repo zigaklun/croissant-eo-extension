@@ -4,200 +4,572 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Earth Observation Croissant Extension</title>
+        <meta
+            name="description"
+            content="Extending MLCommons Croissant for Earth Observation datasets"
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
+            rel="stylesheet"
+        />
         <style>
+            /* Reset and base styles */
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            html {
+                scroll-behavior: smooth;
+            }
+
             body {
                 font-family:
-                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                    "Inter",
+                    -apple-system,
+                    BlinkMacSystemFont,
+                    "Segoe UI",
+                    Roboto,
                     sans-serif;
+                background-color: #000000;
+                color: #ffffff;
                 line-height: 1.6;
-                max-width: 1000px;
+                font-size: 1.125rem;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+
+            /* Navigation */
+            .navbar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 50;
+                background-color: rgba(0, 0, 0, 0.8);
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+                border-bottom: 1px solid #1f2937;
+            }
+
+            .nav-container {
+                max-width: 1152px;
                 margin: 0 auto;
-                padding: 20px;
-                color: #333;
+                padding: 1rem 1.5rem;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
             }
-            .header {
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                color: white;
-                padding: 40px;
-                border-radius: 10px;
-                text-align: center;
-                margin-bottom: 40px;
+
+            .nav-title {
+                font-size: 1.25rem;
+                font-weight: 500;
             }
-            .card {
-                background: #f8f9fa;
-                padding: 30px;
-                margin: 20px 0;
-                border-radius: 8px;
-                border-left: 4px solid #667eea;
+
+            .nav-links {
+                display: flex;
+                align-items: center;
+                gap: 1.5rem;
             }
-            .code {
-                background: #2d3748;
-                color: #e2e8f0;
-                padding: 20px;
-                border-radius: 6px;
-                overflow-x: auto;
-                font-family: "Monaco", "Consolas", monospace;
-                font-size: 14px;
-                white-space: pre;
-            }
-            .badge {
-                background: #48bb78;
-                color: white;
-                padding: 4px 12px;
-                border-radius: 20px;
-                font-size: 12px;
-                font-weight: bold;
-            }
-            a {
-                color: #667eea;
+
+            .nav-links a {
+                color: #9ca3af;
                 text-decoration: none;
+                transition: color 0.3s ease;
             }
-            a:hover {
-                text-decoration: underline;
+
+            .nav-links a:hover {
+                color: #ffffff;
             }
-            .grid {
+
+            /* Main content */
+            .main-content {
+                padding-top: 5rem;
+            }
+
+            /* Hero section */
+            .hero-section {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 1.5rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+            }
+
+            .hero-content {
+                text-align: left;
+                width: 100%;
+                max-width: none;
+                margin-left: 8rem;
+                padding-right: 2rem;
+            }
+
+            .hero-title {
+                font-size: 8rem;
+                font-weight: 300;
+                margin-bottom: 2rem;
+                line-height: 1.1;
+                width: 100%;
+                letter-spacing: -0.02em;
+            }
+
+            .hero-subtitle {
+                color: #9ca3af;
+            }
+
+            .hero-description {
+                font-size: 1.5rem;
+                color: #9ca3af;
+                margin-bottom: 3rem;
+                max-width: 36rem;
+            }
+
+            .get-started-btn {
+                display: inline-block;
+                background-color: #ffffff;
+                color: #000000;
+                padding: 1.25rem 2.5rem;
+                font-size: 1.25rem;
+                font-weight: 500;
+                text-decoration: none;
+                transition: all 0.3s ease;
+                cursor: pointer;
+                border: none;
+            }
+
+            .get-started-btn:hover {
+                background-color: #e5e7eb;
+                transform: scale(1.05);
+            }
+
+            /* Section styles */
+            .section {
+                max-width: 1024px;
+                margin: 0 auto;
+                padding: 5rem 1.5rem;
+            }
+
+            .section-large {
+                max-width: 1152px;
+            }
+
+            .section-title {
+                font-size: 3.5rem;
+                font-weight: 300;
+                margin-bottom: 3rem;
+                text-align: center;
+            }
+
+            /* Code block */
+            .code-block {
+                background-color: #111827;
+                border-radius: 0.5rem;
+                padding: 2rem;
+                font-family:
+                    ui-monospace, SFMono-Regular, "SF Mono", Monaco, Consolas,
+                    "Liberation Mono", "Courier New", monospace;
+                font-size: 1rem;
+                border: 1px solid #1f2937;
+                overflow-x: auto;
+            }
+
+            .code-block pre {
+                color: #d1d5db;
+                white-space: pre;
+                margin: 0;
+            }
+
+            /* Grid layouts */
+            .grid-3 {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 1.5rem;
+                margin-top: 3rem;
+            }
+
+            .grid-2 {
                 display: grid;
                 grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                gap: 20px;
-                margin: 30px 0;
+                gap: 2rem;
+            }
+
+            /* Card styles */
+            .card {
+                background-color: rgba(17, 24, 39, 0.5);
+                padding: 1.5rem;
+                border-radius: 0.5rem;
+                border: 1px solid #1f2937;
+                text-align: center;
+                text-decoration: none;
+                color: inherit;
+                transition: all 0.3s ease;
+                display: block;
+            }
+
+            .card:hover {
+                border-color: #4b5563;
+                transform: scale(1.05);
+            }
+
+            .card-title {
+                font-size: 1.25rem;
+                font-weight: 500;
+                margin-bottom: 0.5rem;
+                color: #ffffff;
+                transition: color 0.3s ease;
+            }
+
+            .card:hover .card-title {
+                color: #e5e7eb;
+            }
+
+            .card-description {
+                color: #9ca3af;
+                font-size: 1rem;
+            }
+
+            /* Field card */
+            .field-card {
+                background-color: rgba(17, 24, 39, 0.5);
+                padding: 1.5rem;
+                border-radius: 0.5rem;
+                border: 1px solid #1f2937;
+                transition: border-color 0.3s ease;
+            }
+
+            .field-card:hover {
+                border-color: #4b5563;
+            }
+
+            .field-title {
+                font-size: 1.375rem;
+                font-weight: 500;
+                margin-bottom: 0.75rem;
+                color: #ffffff;
+            }
+
+            .field-description {
+                color: #9ca3af;
+                line-height: 1.6;
+                font-size: 1rem;
+            }
+
+            /* Footer */
+            .footer {
+                max-width: 1024px;
+                margin: 0 auto;
+                padding: 4rem 1.5rem;
+                border-top: 1px solid #1f2937;
+                margin-top: 4rem;
+            }
+
+            .footer-text {
+                color: #6b7280;
+                font-size: 1rem;
+                text-align: center;
+            }
+
+            .footer-text a {
+                color: #ffffff;
+                text-decoration: none;
+            }
+
+            .footer-text a:hover {
+                text-decoration: underline;
+            }
+
+            /* Responsive design */
+            @media (max-width: 768px) {
+                .nav-links {
+                    gap: 1rem;
+                }
+
+                .hero-content {
+                    margin-left: 2rem;
+                    padding-right: 1rem;
+                }
+
+                .hero-title {
+                    font-size: 4rem;
+                }
+
+                .hero-description {
+                    font-size: 1.25rem;
+                }
+
+                .section-title {
+                    font-size: 2.5rem;
+                }
+
+                .grid-3 {
+                    grid-template-columns: 1fr;
+                }
+
+                .grid-2 {
+                    grid-template-columns: 1fr;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .nav-container {
+                    padding: 1rem;
+                }
+
+                .hero-section,
+                .section,
+                .section-large,
+                .footer {
+                    padding-left: 1rem;
+                    padding-right: 1rem;
+                }
+
+                .hero-content {
+                    margin-left: 1rem;
+                    padding-right: 0.5rem;
+                }
+
+                .hero-title {
+                    font-size: 3rem;
+                }
+            }
+
+            /* Animation classes */
+            .fade-in {
+                opacity: 0;
+                transform: translateY(20px);
+                transition:
+                    opacity 0.8s ease-out,
+                    transform 0.8s ease-out;
+            }
+
+            .fade-in.visible {
+                opacity: 1;
+                transform: translateY(0);
             }
         </style>
     </head>
     <body>
-        <div class="header">
-            <h1>🛰️ Earth Observation Croissant Extension</h1>
-            <p>Extending MLCommons Croissant for Earth Observation datasets</p>
-            <span class="badge">v1.0.0</span>
-        </div>
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-container">
+                <h1 class="nav-title">Croissant EO Extension</h1>
+                <div class="nav-links">
+                    <a href="#docs">Documentation</a>
+                    <a href="#fields">Fields</a>
+                    <a href="https://github.com/mlcommons/croissant">GitHub</a>
+                </div>
+            </div>
+        </nav>
 
-        <div class="card">
-            <h2>🎯 Purpose</h2>
-            <p>
-                This extension adds Earth Observation-specific metadata fields
-                to the
-                <a href="https://mlcommons.org/croissant/" target="_blank"
-                    >MLCommons Croissant</a
-                >
-                standard, enabling better description and discovery of satellite
-                imagery datasets for machine learning.
-            </p>
-        </div>
+        <!-- Main content -->
+        <main class="main-content">
+            <!-- Hero section -->
+            <section class="hero-section">
+                <div class="hero-content">
+                    <h2 class="hero-title">
+                        Earth Observation<br />
+                        <span class="hero-subtitle">Extension</span>
+                    </h2>
+                    <p class="hero-description">
+                        A specialized extension for the Croissant metadata
+                        format, designed for Earth Observation datasets with
+                        geospatial and temporal metadata.
+                    </p>
+                    <button
+                        class="get-started-btn"
+                        onclick="scrollToSection('docs')"
+                    >
+                        Get Started
+                    </button>
+                </div>
+            </section>
 
-        <div class="card">
-            <h2>📋 Quick Start</h2>
-            <p>Add the EO namespace to your Croissant metadata:</p>
-            <pre class="code">
-                {
-                "@context":
-                {
-                    "cr": "https://mlcommons.org/croissant/",
-                    "eo": "https://zigaklun.github.io/croissant-eo-extension/schema/v1.0.0/"
-                },
-                "@type": "sc:Dataset",
-                "name": "my-eo-dataset",
-                "eo:scope":"global",
-                "eo:hasTask": ["classification", "segmentation"],
-                "eo:spatialResolutionInMeters": 10.0,
-                "eo:dataSource":["Sentinel-2"]
+            <!-- Quick Start section -->
+            <section id="docs" class="section fade-in">
+                <h3 class="section-title">Quick Start</h3>
+                <div class="code-block">
+                    <pre>
+{
+  "@context": {
+    "cr": "https://mlcommons.org/croissant/",
+    "eo": "https://zigaklun.github.io/croissant-eo-extension/schema/v1.0.0/"
+  },
+  "@type": "sc:Dataset",
+  "name": "my-eo-dataset",
+  "eo:scope": "global",
+  "eo:hasTask": ["classification", "segmentation"],
+  "eo:spatialResolutionInMeters": 10.0,
+  "eo:dataSource": ["Sentinel-2"]
+}</pre
+                    >
+                </div>
+
+                <div class="grid-3">
+                    <a
+                        href="https://zigaklun.github.io/croissant-eo-extension/examples/NASA-Marine-debris-dataset.json"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="card"
+                    >
+                        <h4 class="card-title">Examples</h4>
+                        <p class="card-description">
+                            Sample datasets using the EO extension
+                        </p>
+                    </a>
+
+                    <a
+                        href="https://zigaklun.github.io/croissant-eo-extension/schema/v1.0.0/schema.json"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="card"
+                    >
+                        <h4 class="card-title">Schema</h4>
+                        <p class="card-description">JSON Schema definitions</p>
+                    </a>
+
+                    <a
+                        href="https://zigaklun.github.io/croissant-eo-extension/schema/v1.0.0/context.json"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="card"
+                    >
+                        <h4 class="card-title">Context</h4>
+                        <p class="card-description">
+                            JSON-LD context definitions
+                        </p>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Available Fields section -->
+            <section id="fields" class="section section-large fade-in">
+                <h3 class="section-title">Available Fields</h3>
+                <div class="grid-2">
+                    <div class="field-card">
+                        <h4 class="field-title">eo:scope</h4>
+                        <p class="field-description">
+                            Geographic coverage description
+                        </p>
+                    </div>
+
+                    <div class="field-card">
+                        <h4 class="field-title">eo:hasTask</h4>
+                        <p class="field-description">
+                            ML task description and type
+                        </p>
+                    </div>
+
+                    <div class="field-card">
+                        <h4 class="field-title">eo:amountOfTrainingData</h4>
+                        <p class="field-description">
+                            Number of training samples
+                        </p>
+                    </div>
+
+                    <div class="field-card">
+                        <h4 class="field-title">eo:numberOfClasses</h4>
+                        <p class="field-description">
+                            Number of classification classes
+                        </p>
+                    </div>
+
+                    <div class="field-card">
+                        <h4 class="field-title">eo:band</h4>
+                        <p class="field-description">
+                            Spectral band information with labels and
+                            wavelengths
+                        </p>
+                    </div>
+
+                    <div class="field-card">
+                        <h4 class="field-title">eo:hasClass</h4>
+                        <p class="field-description">
+                            Class definitions with labels and identifiers
+                        </p>
+                    </div>
+
+                    <div class="field-card">
+                        <h4 class="field-title">eo:statisticsInfo</h4>
+                        <p class="field-description">
+                            Dataset statistics and counts
+                        </p>
+                    </div>
+
+                    <div class="field-card">
+                        <h4 class="field-title">eo:metricsInLIT</h4>
+                        <p class="field-description">
+                            Performance metrics from literature
+                        </p>
+                    </div>
+
+                    <div class="field-card">
+                        <h4 class="field-title">eo:labeling</h4>
+                        <p class="field-description">
+                            Labeling methodology and annotator information
+                        </p>
+                    </div>
+
+                    <div class="field-card">
+                        <h4 class="field-title">
+                            eo:spatialResolutionInMeters
+                        </h4>
+                        <p class="field-description">Spatial resolution</p>
+                    </div>
+
+                    <div class="field-card">
+                        <h4 class="field-title">eo:status</h4>
+                        <p class="field-description">
+                            Dataset completion status
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <p class="footer-text">
+                    Part of the
+                    <a href="https://mlcommons.github.io/croissant/"
+                        >Croissant</a
+                    >
+                    metadata format by MLCommons.
+                </p>
+            </footer>
+        </main>
+
+        <script>
+            // Smooth scrolling function
+            function scrollToSection(sectionId) {
+                const element = document.getElementById(sectionId);
+                if (element) {
+                    element.scrollIntoView({ behavior: "smooth" });
                 }
-            </pre>
-            <div>
-                <p>Complete field definitions and usage examples</p>
-                <a
-                    href="https://github.com/zigaklun/croissant-eo-extension/blob/main/docs/README.md"
-                    >→ Documetation</a
-                >
-            </div>
-        </div>
+            }
 
-        <div class="grid">
-            <div class="card">
-                <h3>🔧 Context files</h3>
-                <p>JSON-LD context definitions</p>
-                <a
-                    href="https://zigaklun.github.io/croissant-eo-extension/schema/v1.0.0/context.json"
-                    >→ View Context</a
-                >
-            </div>
+            // Intersection Observer for fade-in animation
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px",
+            };
 
-            <div class="card">
-                <h3>🔧 Schema Files</h3>
-                <p>JSON Schema definitions</p>
-                <a
-                    href="https://zigaklun.github.io/croissant-eo-extension/schema/v1.0.0/schema.json"
-                    >→ View Schema</a
-                >
-            </div>
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("visible");
+                    }
+                });
+            }, observerOptions);
 
-            <div class="card">
-                <h3>💡 Examples</h3>
-                <p>Sample datasets using the EO extension</p>
-                <a
-                    href="https://zigaklun.github.io/croissant-eo-extension/examples/NASA-Marine-debris-dataset.json"
-                    >→ View NASA Marine debris dataset example</a
-                >
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>🚀 Available Fields</h2>
-            <ul>
-                <li>
-                    <strong>eo:scope</strong> - Geographic coverage description
-                </li>
-                <li>
-                    <strong>eo:has-task</strong> - ML task description and type
-                </li>
-                <li>
-                    <strong>eo:amountOfTrainingData</strong> - Number of
-                    training samples
-                </li>
-                <li>
-                    <strong>eo:numberOfClasses</strong> - Number of
-                    classification classes
-                </li>
-                <li>
-                    <strong>eo:band</strong> - Spectral band information with
-                    labels and wavelengths
-                </li>
-                <li>
-                    <strong>eo:has_class</strong> - Class definitions with
-                    labels and identifiers
-                </li>
-                <li>
-                    <strong>eo:statisticsInfo</strong> - Dataset statistics and
-                    counts
-                </li>
-                <li>
-                    <strong>eo:metricsInLIT</strong> - Performance metrics from
-                    literature
-                </li>
-                <li>
-                    <strong>eo:labeling</strong> - Labeling methodology and
-                    annotator information
-                </li>
-                <li>
-                    <strong>eo:spatialResolutionInMeters</strong> - Spatial
-                    resolution
-                </li>
-                <li><strong>eo:status</strong> - Dataset completion status</li>
-            </ul>
-        </div>
-
-        <footer
-            style="
-                text-align: center;
-                margin-top: 50px;
-                padding-top: 20px;
-                border-top: 1px solid #e2e8f0;
-            "
-        >
-            <p>
-                Created for the Earth Observation ML community by BVL labs •
-                <a href="https://github.com/zigaklun/croissant-eo-extension"
-                    >GitHub Repository</a
-                >
-            </p>
-        </footer>
+            // Observe all fade-in elements
+            document.addEventListener("DOMContentLoaded", () => {
+                const fadeInElements = document.querySelectorAll(".fade-in");
+                fadeInElements.forEach((el) => observer.observe(el));
+            });
+        </script>
     </body>
 </html>
